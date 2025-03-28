@@ -1,0 +1,47 @@
+[
+  {
+    "url": "https://mermaid.live/edit",
+    "components": [
+      {
+        "component": "DOMPurify",
+        "version": "3.1.7",
+        "path": "https://mermaid.live/_app/immutable/chunks/Dsund-Fd.js",
+        "severity": "Medium",
+        "desc": "DOMPurify allows Cross-site Scripting (XSS) CVE-2025-26791 GHSA-vhxf-7vqr-mrjg"
+      },
+      {
+        "component": "DOMPurify",
+        "version": "3.2.4",
+        "path": "https://mermaid.live/_app/immutable/chunks/BcGC3Mve.js",
+        "severity": "",
+        "desc": ""
+      },
+      {
+        "component": "mermaid",
+        "version": "11.5.0",
+        "path": "https://mermaid.live/_app/immutable/chunks/BcGC3Mve.js",
+        "severity": "",
+        "desc": ""
+      }
+    ]
+  },
+  {
+    "url": "https://juejin.cn",
+    "components": [
+      {
+        "component": "DOMPurify",
+        "version": "2.4.3",
+        "path": "https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/2b80e2b.js",
+        "severity": "High",
+        "desc": "DOMpurify has a nesting-based mXSS CVE-2024-47875 GHSA-gx9m-whjm-85jf"
+      },
+      {
+        "component": "DOMPurify",
+        "version": "3.1.6",
+        "path": "https://lf-web-assets.juejin.cn/obj/juejin-web/xitu_juejin_web/2b80e2b.js",
+        "severity": "Medium",
+        "desc": "DOMPurify allows Cross-site Scripting (XSS) CVE-2025-26791 GHSA-vhxf-7vqr-mrjg"
+      }
+    ]
+  }
+]
