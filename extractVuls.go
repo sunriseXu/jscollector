@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bufio"
+	"log"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -104,4 +107,30 @@ func parseVuls(inputString string) []ComponentInfo {
 	}
 
 	return results
+}
+
+func GetListFromFile(path string) []string {
+	// 打开文本文件
+	file, err := os.Open(path)
+	if err != nil {
+		log.Fatalf("无法打开文件: %s", err)
+	}
+	defer file.Close()
+
+	// 创建一个 scanner 来读取文件的每一行
+	scanner := bufio.NewScanner(file)
+	var lines []string
+
+	// 读取文件的每一行并添加到字符串切片中
+	for scanner.Scan() {
+		line := scanner.Text()
+		lines = append(lines, line)
+	}
+
+	// 检查 scanner 是否出现错误
+	if err := scanner.Err(); err != nil {
+		log.Fatalf("读取文件时出错: %s", err)
+	}
+
+	return lines
 }

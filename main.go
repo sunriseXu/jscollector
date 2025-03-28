@@ -3,12 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	ips := []string{
-		// "https://www.baidu.com",
-		"https://juejin.cn",
-		"https://mermaid.live/edit",
-	}
+	// ips := []string{
+	// 	// "https://www.baidu.com",
+	// 	"https://juejin.cn",
+	// 	"https://mermaid.live/edit",
+	// }
 
+	ips := GetListFromFile("ips.txt")
 	// get extensoin url
 	extensionUrl, err := GetExtensionUrl()
 	if err != nil {
