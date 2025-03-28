@@ -34,12 +34,12 @@ func LoadExtension(url string, ctx context.Context, resCh chan SiteComponent, wg
 
 	//新建请求头选项
 	options := []chromedp.ExecAllocatorOption{
-		chromedp.Flag("headless", false),
+		chromedp.Flag("headless", true),
 		chromedp.Flag("hide-scrollbars", false),
 		chromedp.Flag("mute-audio", true),
 		chromedp.Flag("ignore-certificate-errors", true),
 		chromedp.Flag("blink-settings", "imagesEnabled=false"), //不加载图片，提高速度
-		chromedp.Flag("load-extension", "/home/kali/playgroud/retire.js/chrome/extension"),
+		chromedp.Flag("load-extension", extension_path),
 		chromedp.Flag("disable-extensions", false),
 		chromedp.UserAgent(`Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36`),
 	}
@@ -54,13 +54,11 @@ func LoadExtension(url string, ctx context.Context, resCh chan SiteComponent, wg
 	defer cancel()
 
 	err = chromedp.Run(ctx, // 创建另一个新的上下文代表第二个新标签页
-		chromedp.Navigate("chrome-extension://mpebjklbaheapoljihidfmpohcioehpk/popup.html"),
-		// chromedp.Navigate("https://www.baidu.com"),
-		// chromedp.Sleep(5*time.Second),
-		// chromedp.Text(`body`, &res, chromedp.NodeVisible),
+		chromedp.Sleep(1*time.Second),
+		chromedp.Navigate(chrome_extension_url),
 	)
 	if err != nil {
-		fmt.Println("load extension failed")
+		fmt.Println("load extension failed", err)
 		return res, ctx, cancel, err
 	}
 
@@ -78,7 +76,7 @@ func LoadExtension(url string, ctx context.Context, resCh chan SiteComponent, wg
 		chromedp.Navigate("about:blank"),
 		chromedp.Sleep(4*time.Second),
 		chromedp.Navigate(url),
-		chromedp.Sleep(10*time.Second),
+		chromedp.Sleep(8*time.Second),
 	)
 	if err != nil {
 		fmt.Println("open page time out, continue", err)
@@ -111,7 +109,7 @@ func WriteResults(results []SiteComponent, dest string) error {
 	}
 
 	// 打印或保存到文件
-	fmt.Println(string(jsonData))
+	// fmt.Println(string(jsonData))
 
 	// 如果需要将 JSON 写入文件，可以使用以下代码
 	file, err := os.Create(dest)
@@ -145,10 +143,12 @@ func LoadExtensionWrapper(urls []string) []SiteComponent {
 	close(successCh)
 	for result := range successCh {
 		successRes = append(successRes, result)
-		fmt.Println("#################################")
-		fmt.Println("url:", result.Url)
-		fmt.Println("component:", len(result.Components), result.Components[0].Component, result.Components[0].Version)
-		fmt.Println()
+		if len(result.Components) > 0 {
+			fmt.Println("#################################")
+			fmt.Println("url:", result.Url)
+			fmt.Println("component:", len(result.Components), result.Components[0].Component, result.Components[0].Version)
+			fmt.Println()
+		}
 	}
 	return successRes
 }

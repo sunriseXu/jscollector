@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -22,7 +21,7 @@ type SiteComponent struct {
 
 // 解析输入字符串的函数
 func parseVuls(inputString string) []ComponentInfo {
-	fmt.Println(inputString)
+	// fmt.Println(inputString)
 	lines := strings.Split(strings.TrimSpace(inputString), "\n")
 	numberRegex := regexp.MustCompile(`\d`)
 	var results []ComponentInfo

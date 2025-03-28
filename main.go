@@ -9,18 +9,22 @@ func main() {
 		"https://mermaid.live/edit",
 	}
 
+	// get extensoin url
+	extensionUrl, err := GetExtensionUrl()
+	if err != nil {
+		fmt.Println("can not find extion url:", err)
+		return
+	}
+	chrome_extension_url = "chrome-extension://" + extensionUrl + "/popup.html"
+	fmt.Println("chrome_extension_url:" + chrome_extension_url)
+
 	urls := CheckSiteAvailable(ips)
 
 	fmt.Println("found valid urls len:", len(urls))
-	// fmt.Println(urls)
-
-	// urls = []string{
-	// 	"https://juejin.cn/post/7241096652919193658",
-	// }
 
 	// api 爆破
 	results := LoadExtensionWrapper(urls)
 
-	WriteResults(results, "test.json")
+	WriteResults(results, "results.json")
 
 }
